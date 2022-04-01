@@ -25,9 +25,9 @@ First, setup the config.txt file, by adding:
 Don't leave any empty spaces after the 2 lines.
 
 Example:
-    ELLX
-    6edcd2cb0exxxxxfb3d3c71845
-    -- No spaces after tokens --
+- ELLX
+- 6edcd2cb0exxxxxfb3d3c71845
+- -- No spaces after tokens --
 
 2 options to execute the program:
 - ```metar``` it will display the default aerodrome from config.txt file
