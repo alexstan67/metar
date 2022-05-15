@@ -18,20 +18,21 @@ does is basically
 You can copy the executable to ```/usr/local```.
 
 ## Manual
-First, setup the config.txt file, by adding:
+Before compiling, modify line 23 & 24 in main.c to setup:
+
 - ICAO Code of default aerodrome
 - You API key that you can retrieve here: https://www.checkwxapi.com/
 
-Don't leave any empty spaces after the 2 lines.
-
 Example:
-- ELLX
-- 6edcd2cb0exxxxxfb3d3c71845
-- -- No spaces after tokens --
+const char DEFAULT_ICAO[] = "LFAT";
+const char API_KEY[] = "6edcd2cb0e6xxxxxxxxxxxxxxx";
 
 2 options to execute the program:
 - ```metar``` it will display the default aerodrome from config.txt file
 - ```metar LFST``` will display the airport LFST.
+
+If Makefile doesn't execute, modify the rights:
+sudo chmod 776 Makefile
 
 ## Copyright
 Published under GNU General Public License.

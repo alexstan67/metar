@@ -17,43 +17,15 @@
 
 // Prototypes
 size_t got_data(char *buffer, size_t itemsize, size_t nitems, void* ignorethis);
-void getMetar(char icao[], char api_key[]);
+void getMetar(const char icao[], const char api_key[]);
 
 // Constants
-const char DEFAULT_ICAO[] = "LFAT";
-const char API_KEY[] = "6edcd2cb0e6a48efb3d3c71845";
+const char DEFAULT_ICAO[] = "WADD";
+const char API_KEY[] = "6edcd2xxxxxxxxxxxxxxxxx45";
 
 // Functions
 int main(int argc, char *argv[])
 {
-	// We load the config file tokens (Defaut ICAO Code, and API Key)
-	FILE* setup_file = NULL;
-	char string[LINE_MAX_LENGTH] = "";
-	char default_icao[5];
-	char api_key[LINE_MAX_LENGTH] = "";
-		
-	setup_file = fopen("config.txt", "r");
-	if (setup_file != NULL)
-	{
-		fgets(string, 5, setup_file);	// We read the 4 first caracters
-		for(int i=0; i<5; i++)
-		{
-			default_icao[i] = string[i];
-		}
-		fseek(setup_file, 5, SEEK_SET);	// We go on second line
-		fgets(string, LINE_MAX_LENGTH, setup_file);
-		for(int i=0; i<strlen(string)-1; i++)
-		{
-			api_key[i] = string[i];
-		}
-	}
-	else
-	{
-		printf("Impossible to read the config.txt file !\n");
-		exit (EXIT_FAILURE);
-	}
-	fclose(setup_file);
-
 	// We check if argument was given, by default ELLX
 	char icao[5];
 	
@@ -66,12 +38,12 @@ int main(int argc, char *argv[])
 		strcpy(icao, DEFAULT_ICAO);
 	}
 
-	getMetar(icao, api_key);
+	getMetar(DEFAULT_ICAO, API_KEY);
 
 	return EXIT_SUCCESS;
 }
 
-void getMetar(char icao[], char api_key[])
+void getMetar(const char icao[], const char api_key[])
 {
 	// CURL Function
 	CURL *curl;
