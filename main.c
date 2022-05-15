@@ -1,8 +1,8 @@
 /*
  * Author:	Alexandre Stanescot
  * Purpose: Display a raw metar given an airport ICAO code (Exemple: "ELLX")
- * Date:	01/04/2022
- * Version:	1.0
+ * Date:	15/05/2022
+ * Version:	1.1
  * Compile:	gcc main.c -o metar -lcurl
  * Run:		./metar or ./metar ELLX
  */
@@ -18,6 +18,10 @@
 // Prototypes
 size_t got_data(char *buffer, size_t itemsize, size_t nitems, void* ignorethis);
 void getMetar(char icao[], char api_key[]);
+
+// Constants
+const char DEFAULT_ICAO[] = "LFAT";
+const char API_KEY[] = "6edcd2cb0e6a48efb3d3c71845";
 
 // Functions
 int main(int argc, char *argv[])
@@ -59,7 +63,7 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		strcpy(icao, default_icao);
+		strcpy(icao, DEFAULT_ICAO);
 	}
 
 	getMetar(icao, api_key);
@@ -91,7 +95,7 @@ void getMetar(char icao[], char api_key[])
 
 	char full_api[] = "";
 	strcat(full_api, "x-api-key: ");
-	strcat(full_api, api_key);
+	strcat(full_api, API_KEY);
 
 	struct curl_slist *headers = NULL;
 	headers = curl_slist_append(headers, full_api);
