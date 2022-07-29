@@ -1,10 +1,15 @@
 /*
- * Author:	Alexandre Stanescot
+ *     _    ____
+ *    / \  / ___|   Alexandre Stanescot
+ *   / _ \ \___ \   http://alexstan67.github.io/profile/
+ *  / ___ \ ___) |  https://github.com/alexstan67/
+ * /_/   \_\____/
+
  * Purpose: Display a raw metar given an airport ICAO code (Exemple: "ELLX")
- * Date:	15/05/2022
- * Version:	1.1
- * Compile:	gcc main.c -o metar -lcurl
- * Run:		./metar or ./metar ELLX
+ * Date:	29/07/2022
+ * Version:	1.2
+ * Compile:	gcc src/main.c -o bin/metar -lcurl
+ * Run:		./metar or ./metar <ICAO_CODE>
  */
 
 #include <stdio.h>
@@ -17,16 +22,23 @@
 
 // Prototypes
 size_t got_data(char *buffer, size_t itemsize, size_t nitems, void* ignorethis);
-void getMetar(const char icao[], const char api_key[]);
+void getMetar(const char *icao, const char *api_key);
 
-// Constants
-const char DEFAULT_ICAO[] = "WADD";
-const char API_KEY[] = "6edcd2xxxxxxxxxxxxxxxxx45";
 
 // Functions
 int main(int argc, char *argv[])
 {
-	// We check if argument was given, by default ELLX
+  // .env variables
+  const char *DEFAULT_ICAO = getenv("METAR_DEFAULT");
+  const char *API_KEY = getenv("METAR_API_CHECKWX");
+
+  if(DEFAULT_ICAO == NULL || API_KEY == NULL )
+  {
+    fprintf(stderr, "Environment variables METAR_DEFAULT or METAR_API_CHECKWX not found!\n");
+    return EXIT_FAILURE;
+  }
+
+	// We check if argument was given, by default the one in the environment variable
 	char icao[5];
 	
 	if(argc == 2)
@@ -38,12 +50,12 @@ int main(int argc, char *argv[])
 		strcpy(icao, DEFAULT_ICAO);
 	}
 
-	getMetar(DEFAULT_ICAO, API_KEY);
+	getMetar(icao, API_KEY);
 
 	return EXIT_SUCCESS;
 }
 
-void getMetar(const char icao[], const char api_key[])
+void getMetar(const char *icao, const char *API_KEY)
 {
 	// CURL Function
 	CURL *curl;

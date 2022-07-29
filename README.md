@@ -18,14 +18,15 @@ does is basically
 You can copy the executable to ```/usr/local```.
 
 ## Manual
-Before compiling, modify line 23 & 24 in main.c to setup:
+metar uses environment variables to work.
+Please create the 2 followings:
 
-- ICAO Code of default aerodrome
-- You API key that you can retrieve here: https://www.checkwxapi.com/
+- METAR_DEFAULT=<ICAO Code of default aerodrome>
+- METAR_API_CHECKWX=<Your API key that you can retrieve here: https://www.checkwxapi.com/>
 
 Example:
-const char DEFAULT_ICAO[] = "LFAT";
-const char API_KEY[] = "6edcd2cb0e6xxxxxxxxxxxxxxx";
+export METAR_DEFAULT=ELLX
+export METAR_API_CHECKWX=6edcd2cb0e6xxxxxxxxxxxxxxx
 
 2 options to execute the program:
 - ```metar``` it will display the default aerodrome from config.txt file
